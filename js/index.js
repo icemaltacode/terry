@@ -8,7 +8,16 @@ const ENV = 'prod';
 
 window.addEventListener('load', () => {
     handleTheme();
-    loadView('a3', bindAssistantSelection);
+    
+    const token = localStorage.getItem('jwt');
+    const created = localStorage.getItem('jwt_created');
+    
+    if (!token || !created || Date.now() - parseInt(created) > 3600000) {
+        // No token or token older than 1 hour
+        loadView('login', bindLogin);
+    } else {
+        loadView('a3', bindAssistantSelection);
+    }
 });
 
 // window.addEventListener('resize', function () {
@@ -69,6 +78,49 @@ function loadView(view, cb) {
             cb();
         })
         .catch((error) => console.error('Error fetching the HTML:', error));
+}
+
+function bindLogin() {
+    const form = document.getElementById('signin-form');
+    if (!form) return;
+
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const username = document.getElementById('inputUsername').value.trim();
+        const password = document.getElementById('inputPassword').value.trim();
+
+        if (!username || !password) {
+            alert('Please enter both username and password.');
+            return;
+        }
+
+        try {
+            const url =
+                ENV === 'prod'
+                    ? 'https://terry.icelabs.training/backend/login'
+                    : 'http://127.0.0.1:3000/login';
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
+
+            const data = await response.json();
+            localStorage.setItem('jwt', data.token);
+            localStorage.setItem('jwt_created', Date.now());
+            loadView('a3', bindAssistantSelection);
+        } catch (error) {
+            console.error('Login error:', error);
+            document.getElementById('login-failed').classList.remove('d-none');
+        }
+    });
 }
 
 function bindAssistantSelection() {
@@ -246,14 +298,18 @@ async function sendMessage(message) {
 
     // Send request to backend proxy
     try {
-        const url = ENV === 'prod'
-        ? 'https://terry.icelabs.training/backend/chat'
-        : 'http://127.0.0.1:3000/chat';
+        const url =
+            ENV === 'prod'
+                ? 'https://terry.icelabs.training/backend/chat'
+                : 'http://127.0.0.1:3000/chat';
+
+        const token = localStorage.getItem('jwt');
 
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({
                 userMessage: userMessage,
@@ -269,7 +325,11 @@ async function sendMessage(message) {
         let receivedText = '';
         outputDiv.innerHTML += `<div class="text-secondary terry-bubble"><strong>Terry:</strong></div>`;
         let assistantOutputDiv = document.createElement('div');
-        assistantOutputDiv.classList.add('terry-bubble', 'text-secondary', 'terry-words');
+        assistantOutputDiv.classList.add(
+            'terry-bubble',
+            'text-secondary',
+            'terry-words'
+        );
         outputDiv.appendChild(assistantOutputDiv);
 
         while (true) {
