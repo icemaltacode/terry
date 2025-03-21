@@ -1,0 +1,180 @@
+/* A3 Selection Page */
+
+#a3-selection .card {
+    height: 26rem;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 575.98px) {
+    #a3-selection .card {
+        height: 23rem;
+        margin-bottom: 10px;
+    }
+}
+
+#a3-selection img {
+    max-width: 200px;
+    align-self: center;
+}
+
+#a3-selection a {
+    margin-bottom: 50px;
+}
+
+/* Form Page */
+#form-navbar {
+    margin-bottom: 10px;
+}
+
+.card form {
+    text-align: left;
+}
+
+#promptText {
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+
+/* Ensures background blur when modal is active */
+.modal-backdrop.show {
+    backdrop-filter: blur(5px);
+}
+
+/* Floating sidebar */
+.floating-toggle-btn {
+    position: fixed;
+    top: 50px;
+    right: 20px;
+    padding: 10px;
+    z-index: 1000;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.floating-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0; /* Always visible on large screens */
+    width: 33vw; /* Adjust as needed */
+    min-width: 420px;
+    height: 100vh;
+    box-shadow: -4px 0px 10px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease-in-out;
+    z-index: 1050;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+/* When sidebar is expanded */
+.floating-sidebar.show {
+    right: 0; /* Slide into view */
+}
+
+@media (max-width: 991.98px) {
+    /* Small screens */
+    .floating-sidebar {
+        right: -100%; /* Hidden initially */
+    }
+    .floating-sidebar.show {
+        right: 0; /* Slide in when toggled */
+    }
+}
+
+.close-sidebar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1100;
+    display: none; /* Hide by default */
+}
+
+@media (max-width: 991.98px) {
+    /* Small screens */
+    .close-sidebar {
+        display: block; /* Show only on small screens */
+    }
+}
+
+/** Terry's Sidebar **/
+#terry-profile {
+    margin-bottom: 1rem;
+}
+
+#notificationDot {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    background-color: red;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.4);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.pulse-dot {
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+#terry-card {
+    display: flex;
+    height: 100%;
+}
+
+#terryOutput {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    border-radius: 5px;
+    padding: 5px;
+    overflow-y: scroll;
+}
+
+.user-bubble {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+.terry-bubble {
+    text-align: left;
+}
+.terry-words {
+    margin-top: -1rem;
+}
+
+.loading-img {
+    width: 50px;
+}
+
+#evaluatePrompt {
+    margin-right: 10px;
+}
+
+/* Form */
+.invalid-tooltip {
+    position: relative;
+    margin-top: 0.2rem;
+    width: fit-content;
+}

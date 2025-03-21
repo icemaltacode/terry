@@ -1,0 +1,168 @@
+<div class="row">
+    <div class="col-lg-8 col-xs-12">
+        <nav id='form-navbar' class="navbar bg-body-secondary">
+            <div class="container">
+                <a id="startover" href="#startover" class="btn btn-danger"><i class="bi bi-repeat"></i> Start Over</a>
+            </div>
+        </nav>
+    </div>
+</div>
+<div class="row">
+    <!-- Form Column -->
+    <div class="col-lg-8 col-xs-12">
+        <div class="card p-4">
+            <h3>Build Your Prompt</h3>
+            <form id="promptForm" class="text-left needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="placeholder-job-description" class="form-label">Job description*</label>
+                    <input type="text" class="form-control" id="placeholder-job-description"
+                        placeholder="e.g. you are a strategic advisor" required>
+                    <div class="invalid-tooltip">
+                        Job description is required.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="placeholder-company-name" class="form-label">Company*</label>
+                    <input type="text" class="form-control" id="placeholder-company-name" placeholder="e.g. Magpie Bank plc." required>
+                    <div class="invalid-tooltip">
+                        Company name is required.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="placeholder-expertise" class="form-label">Expertise</label>
+                    <input type="text" class="form-control" id="placeholder-expertise" placeholder="e.g. Data analysis, copy generation, recruitment.">
+                </div>
+                <div class="mb-3">
+                    <label for="placeholder-task" class="form-label">Task</label>
+                    <textarea class="form-control" id="placeholder-task" rows="5"
+                        placeholder="e.g. you will help me generate a marketing plan for a new product I am launching." required></textarea>
+                    <div class="invalid-tooltip">
+                        Task is required.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="placeholder-output" class="form-label">Persona's Output Format</label>
+                    <textarea class="form-control" id="placeholder-output" rows="5"
+                        placeholder="e.g. &#10;- Keep your output to 500 words or less.&#10;- Format in bullet points.&#10;- Maintain a professional tone." required></textarea>
+                    <div class="invalid-tooltip">
+                        Persona's output format is required.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="placeholder-company" class="form-label">Company Information</label>
+                    <textarea class="form-control" id="placeholder-company" rows="5"
+                        placeholder="e.g. The Institute of Computer Education Ltd. is licensed by the Malta Further & Higher Education Authority as a Further and Higher Education Institution (Education License No. 2011-TC-010). We provide a wide range of courses with world-wide recognised certifications. We are dedicated to unlocking the potential of our students, through our experienced staff and qualified trainers. Our main objective is to see our students successfully reaching their goals."></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="placeholder-task-detail" class="form-label">Detailed Task Description</label>
+                    <textarea class="form-control" id="placeholder-task-detail" rows="14"
+                        placeholder="e.g. I will be uploading three files, as follows: &#10; - sales.xlsx - sales for a financial quarter. &#10; - customers.xlsx - a list of customers who have purchsed in this quarter. &#10; - feedback.csv - feedback from customers regarding shopping experience. 
+
+Your job is to analyse these three files and identify any trends relating to which products were pruchased, pricing from the sales file, and feedback given by clients.
+The format of the files is as follows:
+
+sales.xlsx: 
+- id: unique sale id
+- prodId: id of product sold
+- etc..." required></textarea>
+                <div class="invalid-tooltip">
+                    Detailed task description is required.
+                </div>
+                </div>
+                <div class="mb-3">
+                    <label for="placeholder-output-detail" class="form-label">Task Output Format</label>
+                    <textarea class="form-control" id="placeholder-output-detail" rows="5"
+                        placeholder="e.g. &#10;- Start with an overall 100-word summary of your findings.&#10;- Show me a pie chart of sales by product.&#10;- recommend hash tags for use on our social media." required></textarea>
+                    <div class="invalid-tooltip">
+                        Task output format is required.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="placeholder-boundaries" class="form-label">Boundaries</label>
+                    <textarea class="form-control" id="placeholder-boundaries" rows="5"
+                        placeholder="e.g. &#10;- Do not mention our competitors.&#10; - Refuse to answer questions not related to your primary task.&#10; - Never make up information. Do not hallucinate."></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="placeholder-references" class="form-label">References</label>
+                    <textarea class="form-control" id="placeholder-references" rows="5"
+                        placeholder="e.g. &#10;- If you don't know the answer to a question, direct the user to email info@mycompanyname.com.&#10; - When using external (web) sources, always show your source."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Generate</button>
+        </div>
+        </form>
+    </div>
+</div>
+
+<!-- Terry's Column -->
+
+    <div id="sidebar" class="collapse d-lg-block floating-sidebar">
+        <div id="terry-card" class="card p-4">
+            <button type="button" class="btn-close close-sidebar" data-bs-toggle="collapse" data-bs-target="#sidebar"
+                aria-label="Close"></button>
+            <div id="terry-profile" class="position-relative mx-auto" style="width: 72px; height: 72px;">
+                <div class="position-relative" style="width: 72px; height: 72px;">
+                    <img src="/assets/terry_round.png" alt="Terry" width="72" height="72">
+                </div>
+            </div>
+            
+            <!-- Terry's Response Area -->
+            <div id="terryOutput" class="border border-secondary-subtle">
+            </div>
+            
+            <!-- User Input Area -->
+            <div class="mt-2">
+                <textarea id="terryInput" class="form-control mb-2" rows="2" placeholder="Type your message..."></textarea>
+                <div class="d-flex justify-content-end">
+                    <small class="text-muted" style="margin-right: auto"><em>AI can make mistakes.</em></small>
+                    <button id="evaluatePrompt" class="btn btn-secondary btn-sm"><i class="bi bi-file-text"></i> Evalute prompt</button>
+                    <button id="sendMessage" class="btn btn-primary btn-sm"><i class="bi bi-arrow-right-circle"></i></button>
+                </div>
+            </div>
+    </div>
+</div>
+
+<button class="btn btn-secondary d-lg-none floating-toggle-btn" type="button" data-bs-toggle="collapse"
+    data-bs-target="#sidebar">
+    <div class="position-relative" style="width: 72px; height: 72px;">
+        <img class="d-block mx-auto mb-4" src="/assets/terry_round.png" alt="Terry" width="72" height="72">
+        <span id="notificationDot" class="d-none"></span>
+    </div>
+</button>
+
+<!-- Warning Modal -->
+<div id="warningModal" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Warning</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to start over? You will lose any progress made so far!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="confirmYes">Yes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Prompt Modal -->
+<div id="promptModal" class="modal fade fullscreen-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Your Prompt</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="flex-grow: 1; display: flex; flex-direction: column;">
+                <textarea id="promptText" class="form-control" rows="10" style="flex-grow: 1; height: 100%; resize: none;"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="copyPrompt"><i class="bi bi-clipboard"></i> Copy</button>
+            </div>
+        </div>
+    </div>
+</div>

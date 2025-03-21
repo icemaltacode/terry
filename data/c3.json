@@ -1,0 +1,6 @@
+[
+    {
+        "name": "main",
+        "prompt": "\n\n# Context & Background\n\n## About ⟨placeholder-company-name⟩\n⟨placeholder-company⟩\n\n\"\"\"\n\n# Task Description\n⟨placeholder-task-detail⟩\n\n# Output Format\n⟨placeholder-output-detail⟩\n\n# Boundaries\n⟨placeholder-boundaries⟩\n\n# References\n⟨placeholder-references⟩\n"
+    }
+]
