@@ -11,7 +11,18 @@ const ASSISTANT_ID = process.env.ASSISTANT_ID;
 const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
 
 const app = express();
-app.use(cors()); // Allow cross-origin requests
+app.use(cors({
+  origin: function (origin, callback) {
+    const allowedOrigins = ['https://terry.icelabs.training', 'http://localhost:5000'];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['POST'],
+  allowedHeaders: ['Content-Type', 'x-app-token']
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Enable parsing form data
 
