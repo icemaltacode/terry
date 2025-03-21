@@ -4,6 +4,8 @@ let inputField = null;
 let outputDiv = null;
 let conversation_thread = null;
 
+const ENV = 'prod';
+
 window.addEventListener('load', () => {
     handleTheme();
     loadView('a3', bindAssistantSelection);
@@ -244,7 +246,11 @@ async function sendMessage(message) {
 
     // Send request to backend proxy
     try {
-        const response = await fetch('http://127.0.0.1:3000/chat', {
+        const url = ENV === 'prod'
+        ? 'https://terry.icelabs.training/backend/chat'
+        : 'http://127.0.0.1:3000/chat';
+
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
