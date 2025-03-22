@@ -21,7 +21,8 @@ app.use(
         origin: function (origin, callback) {
             const allowedOrigins = [
                 'https://terry.icelabs.training',
-                'http://localhost:5500'
+                'http://localhost:5500',
+                'http://127.0.0.1:5500'
             ];
             if (!origin || allowedOrigins.includes(origin)) {
                 callback(null, true);

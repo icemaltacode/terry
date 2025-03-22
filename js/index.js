@@ -8,10 +8,10 @@ const ENV = 'prod';
 
 window.addEventListener('load', () => {
     handleTheme();
-    
+
     const token = localStorage.getItem('jwt');
     const created = localStorage.getItem('jwt_created');
-    
+
     if (!token || !created || Date.now() - parseInt(created) > 3600000) {
         // No token or token older than 1 hour
         loadView('login', bindLogin);
@@ -29,10 +29,6 @@ function handleTheme() {
     const userPrefersDark =
         window.matchMedia &&
         window.matchMedia('(prefers-color-scheme: dark)').matches;
-    document.body.setAttribute(
-        'data-bs-theme',
-        userPrefersDark ? 'dark' : 'light'
-    );
 
     // See if there is a saved preference, otherwise set default preference
     const savedTheme = localStorage.getItem('theme');
@@ -44,6 +40,11 @@ function handleTheme() {
             : 'light';
 
     document.body.setAttribute('data-bs-theme', theme);
+    const icon = document.getElementById('themeToggleBtn').querySelector('i');
+    if (theme === 'dark') {
+        icon.classList.remove('bi-moon');
+        icon.classList.add('bi-sun');
+    }
 
     // Handle theme switch button
     document
@@ -293,8 +294,7 @@ async function sendMessage(message) {
     inputField.value = '';
 
     // Show loading spinner
-    outputDiv.innerHTML +=
-        "<img class='loading-img' src='/assets/loading_light.gif'>";
+    outputDiv.innerHTML += "<div class=\"spinner-grow spinner-grow-sm loading-img\" role=\"status\"></div>";
 
     // Send request to backend proxy
     try {
@@ -309,7 +309,7 @@ async function sendMessage(message) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                Authorization: `Bearer ${token}`
             },
             body: JSON.stringify({
                 userMessage: userMessage,
@@ -323,7 +323,7 @@ async function sendMessage(message) {
         const decoder = new TextDecoder();
 
         let receivedText = '';
-        outputDiv.innerHTML += `<div class="text-secondary terry-bubble"><strong>Terry:</strong></div>`;
+        outputDiv.innerHTML += `<div class="text-body terry-bubble"><strong>Terry:</strong></div>`;
         let assistantOutputDiv = document.createElement('div');
         assistantOutputDiv.classList.add(
             'terry-bubble',
