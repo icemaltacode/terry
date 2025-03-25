@@ -137,3 +137,6 @@ dist
 
 # Deployment files
 Deployment/*
+
+# Mac stuff
+**/.DS_Store
