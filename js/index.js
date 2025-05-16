@@ -4,6 +4,9 @@ let inputField = null;
 let outputDiv = null;
 let conversation_thread = null;
 
+let awaiting_response = false;
+let message_queue = [];
+
 const ENV = 'prod';
 
 window.addEventListener('load', () => {
@@ -279,6 +282,14 @@ function bindForm() {
 }
 
 async function sendMessage(message) {
+    if (awaiting_response) {
+        message_queue.push(message);
+        unit = message_queue.length > 1 ? "messages" : "message";
+        outputDiv.innerHTML += `<div class="text-primary user-bubble"><strong>${message_queue.length} ${unit} queued.</strong></div><br>`;
+        return;
+    }
+    
+    awaiting_response = true;
     // Get message from input field or parameter
     const userMessage = message || inputField.value.trim();
     if (!userMessage) return; // Prevent sending empty messages
@@ -317,7 +328,10 @@ async function sendMessage(message) {
             })
         });
 
-        if (!response.ok) throw new Error('Network response was not ok');
+        if (!response.ok) {
+            awaiting_response = false;
+            throw new Error('Network response was not ok');
+        }
 
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
@@ -387,6 +401,11 @@ async function sendMessage(message) {
 
         // Hide loading spinner
         document.querySelector('.loading-img').remove();
+
+        awaiting_response = false;
+        if (message_queue.length > 0) {
+            sendMessage(message_queue.shift());
+        } 
     }
 }
 
